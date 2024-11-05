@@ -1,8 +1,7 @@
 <template>
-  <v-footer height="40" app>
+  <v-footer height="40" class="text-center flex-0-0 justify-center">
     <div
       class="text-caption text-disabled"
-      style="position: absolute; right: 16px;"
     >
       &copy; 2024-{{ (new Date()).getFullYear() }} <span class="d-none d-sm-inline-block"></span>
       —
