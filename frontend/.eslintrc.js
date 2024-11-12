@@ -1,20 +1,16 @@
-/**
- * .eslint.js
- *
- * ESLint configuration file.
- */
-
 module.exports = {
   root: true,
   env: {
-    node: true,
+    node: true
   },
   extends: [
     'vuetify',
     '@vue/eslint-config-typescript',
-    './.eslintrc-auto-import.json',
+    './.eslintrc-auto-import.json'
   ],
   rules: {
     'vue/multi-word-component-names': 'off',
-  },
+    semi: ['error', 'never'],
+    'comma-dangle': ['error', 'never']
+  }
 }

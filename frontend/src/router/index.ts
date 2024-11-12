@@ -5,13 +5,13 @@ import { routes } from 'vue-router/auto-routes'
 const customRoutes = [
   {
     path: '',
-    redirect: '/home',
+    redirect: '/home'
   }
-];
+]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: setupLayouts([...routes, ...customRoutes]),
+  routes: setupLayouts([...routes, ...customRoutes])
 })
 
 router.onError((err, to) => {

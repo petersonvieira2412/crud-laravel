@@ -1,83 +1,80 @@
 <template>
   <v-card flat>
     <v-card-title class="d-flex align-center pe-2">
-      <v-icon :icon="icon"></v-icon> &nbsp; {{ title }}
+      <v-icon :icon="icon" /> &nbsp; {{ title }}
 
-      <v-spacer></v-spacer>
+      <v-spacer />
 
       <v-text-field
         v-model="search"
         density="compact"
-        label="Search"
-        prepend-inner-icon="mdi-magnify"
-        variant="solo-filled"
         flat
         hide-details
+        label="Search"
+        prepend-inner-icon="mdi-magnify"
         single-line
-      ></v-text-field>
+        variant="solo-filled"
+      />
     </v-card-title>
 
-    <v-divider></v-divider>
+    <v-divider />
 
     <v-data-table
       v-model:search="search"
+      class="elevation-1"
+      :headers="headers.text"
       :items="items"
-      :headers="headers"
     >
-      <template v-slot:item="{ item }">
-        <tr>
-          <td v-for="(field, key) in item" :key="key" :class="field.align">
-            <component
-              v-if="field.type === 'text'"
-              :is="'span'"
-            >{{ field.value }}</component>
-            <component
-              v-else-if="field.type === 'img'"
-              :is="'v-img'"
-              :src="field.value"
-              height="64"
-              cover
-            ></component>
-            <component
-              v-else-if="field.type === 'price'"
-              :is="'span'"
-            >R$ {{ field.value.toFixed(2) }}</component>
-            <v-chip
-              v-else-if="field.type === 'boolean'"
-              :color="field.value ? 'green' : 'red'"
-              class="text-uppercase"
-              size="small"
-              label
-            >
-              {{ field.value ? 'In stock' : 'Out of stock' }}
-            </v-chip>
-          </td>
-        </tr>
+      <template v-for="header in headers" #[`item.${header.value}`]="{ item }">
+        <span v-if="header.type === 'text'">{{ item[header.value] }}</span>
+
+        <v-card
+          v-else-if="header.type === 'image'"
+          class="my-2"
+          elevation="2"
+          rounded
+          width="75"
+        >
+          <v-img cover :src="item[header.value]" />
+        </v-card>
+
+        <span v-else-if="header.type === 'price'">R$ {{ item[header.value].toFixed(2) }}</span>
+
+        <v-chip
+          v-else-if="header.type === 'boolean'"
+          class="text-uppercase"
+          :color="item[header.value] ? 'green' : 'red'"
+          label
+          size="small"
+        >
+          {{ item[header.value] ? 'IN STOCK' : 'OUT OF STOCK' }}
+        </v-chip>
+
       </template>
     </v-data-table>
   </v-card>
 </template>
 
 <script>
-export default {
-  props: {
-    title: String,
-    icon: String,
-    items: {
-      type: Array,
-      required: true,
-      default: () => [],
+  export default {
+    props: {
+      title: String,
+      icon: String,
+      items: {
+        type: Array,
+        required: true,
+        default: () => []
+      },
+      headers: {
+        type: Array,
+        required: true,
+        default: () => []
+      }
     },
-    headers: {
-      type: Array,
-      required: true,
-      default: () => [],
-    },
-  },
-  data() {
-    return {
-      search: ''
-    };
-  },
-};
+    data () {
+      return {
+        search: ''
+      }
+    }
+  }
 </script>

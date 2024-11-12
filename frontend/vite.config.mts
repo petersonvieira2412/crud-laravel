@@ -6,57 +6,57 @@ import Layouts from 'vite-plugin-vue-layouts'
 import Vue from '@vitejs/plugin-vue'
 import VueRouter from 'unplugin-vue-router/vite'
 import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import dotenv from 'dotenv'
 
 // Utilities
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
+dotenv.config()
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     VueRouter({
-      dts: 'src/typed-router.d.ts',
+      dts: 'src/typed-router.d.ts'
     }),
     Layouts(),
     AutoImport({
       imports: [
         'vue',
         {
-          'vue-router/auto': ['useRoute', 'useRouter'],
+          'vue-router/auto': ['useRoute', 'useRouter']
         }
       ],
       dts: 'src/auto-imports.d.ts',
       eslintrc: {
-        enabled: true,
+        enabled: true
       },
-      vueTemplate: true,
+      vueTemplate: true
     }),
     Components({
-      dts: 'src/components.d.ts',
+      dts: 'src/components.d.ts'
     }),
     Vue({
-      template: { transformAssetUrls },
+      template: { transformAssetUrls }
     }),
-    // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
     Vuetify({
       autoImport: true,
       styles: {
-        configFile: 'src/styles/settings.scss',
-      },
+        configFile: 'src/styles/settings.scss'
+      }
     }),
     Fonts({
       google: {
-        families: [ {
+        families: [{
           name: 'Roboto',
-          styles: 'wght@100;300;400;500;700;900',
-        }],
-      },
-    }),
+          styles: 'wght@100;300;400;500;700;900'
+        }]
+      }
+    })
   ],
-  define: { 'process.env': {} },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@': fileURLToPath(new URL('./src', import.meta.url))
     },
     extensions: [
       '.js',
@@ -65,10 +65,13 @@ export default defineConfig({
       '.mjs',
       '.ts',
       '.tsx',
-      '.vue',
-    ],
+      '.vue'
+    ]
+  },
+  define: {
+    'process.env': process.env
   },
   server: {
-    port: 3000,
-  },
+    port: 3000
+  }
 })

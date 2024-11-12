@@ -1,62 +1,55 @@
 <template>
   <v-container>
+    <div class="text-right v-col-12">
+      <ButtonApp
+        color="green"
+        icon="mdi-plus"
+        :link="'/products/add'"
+        text="Add Product"
+      />
+    </div>
+    <v-divider class="v-col-md-12" />
     <DataTable
-      title="Product List"
-      :items="items"
       :headers="headers"
       icon="mdi-cart"
+      :items="items"
+      title="Product List"
     />
   </v-container>
 </template>
 
 <script>
-import DataTable from '@/components/DataTable.vue';
+  import { productService } from '@/services/ProductService'
 
-export default {
-  components: {
-    DataTable,
-  },
-  data() {
-    return {
-      headers: [
-        { text: 'Name', value: 'name', sortable: true },
-        { text: 'Image', value: 'image', sortable: false },
-        { text: 'Price', value: 'price', sortable: true },
-        { text: 'Stock', value: 'stock', sortable: true },
-      ],
-      items: [
-        {
-          name: { value: 'Nebula GTX 3080', type: 'text', align: 'center' },
-          image: { value: 'https://cdn.vuetifyjs.com/docs/images/graphics/gpus/1.png', type: 'img', align: 'center' },
-          price: { value: 699.99, type: 'price', align: 'center' },
-          stock: { value: true, type: 'boolean', align: 'center' },
-        },
-        {
-          name: { value: 'Galaxy RTX 3080', type: 'text', align: 'center' },
-          image: { value: 'https://cdn.vuetifyjs.com/docs/images/graphics/gpus/2.png', type: 'img', align: 'center' },
-          price: { value: 799.99, type: 'price', align: 'center' },
-          stock: { value: false, type: 'boolean', align: 'center '}
-        },
-        {
-          name: { value: 'Orion RX 6800 XT', type: 'text', align: 'center' },
-          image: { value: 'https://cdn.vuetifyjs.com/docs/images/graphics/gpus/3.png', type: 'img', align: 'center' },
-          price: { value: 649.99, type: 'price', align: 'center' },
-          stock: { value: true, type: 'boolean', align: 'center '}
-        },
-        {
-          name: { value: 'Vortex RTX 3090', type: 'text', align: 'center' },
-          image: { value: 'https://cdn.vuetifyjs.com/docs/images/graphics/gpus/4.png', type: 'img', align: 'center' },
-          price: { value: 1499.99, type: 'price', align: 'center' },
-          stock: { value: true, type: 'boolean', align: 'center '}
-        },
-        {
-          name: { value: 'Cosmos GTX 1660 Super', type: 'text', align: 'center' },
-          image: { value: 'https://cdn.vuetifyjs.com/docs/images/graphics/gpus/5.png', type: 'img', align: 'center' },
-          price: { value: 299.99, type: 'price', align: 'center' },
-          stock: { value: false, type: 'boolean', align: 'center '}
+  export default {
+    data () {
+      return {
+        headers: [
+          { text: 'Name', value: 'name', type: 'text', sortable: true },
+          { text: 'Image', value: 'image', type: 'image', sortable: false },
+          { text: 'Price', value: 'price', type: 'price', sortable: true },
+          { text: 'Stock', value: 'stock', type: 'boolean', sortable: true }
+        ],
+        items: []
+      }
+    },
+    mounted () {
+      this.loadProducts()
+    },
+    methods: {
+      async loadProducts () {
+        try {
+          const response = await productService.getAllProducts()
+          console.log('Received Products:', response)
+          this.items = response.map(product => ({
+            ...product,
+            price: parseFloat(product.price),
+            stock: product.stock === 1
+          }))
+        } catch (error) {
+          console.error('Erro ao carregar produtos:', error)
         }
-      ]
-    };
+      }
+    }
   }
-};
 </script>

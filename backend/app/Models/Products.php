@@ -11,7 +11,9 @@ class Products extends Model
     protected $fillable = [
         'name',
         'description',
+        'image',
         'price',
+        'stock',
         'created_at',
         'updated_at',
     ];

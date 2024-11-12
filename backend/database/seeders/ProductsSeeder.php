@@ -16,7 +16,9 @@ class ProductsSeeder extends Seeder
             Products::create([
                 'name' => $faker->word,
                 'description' => $faker->sentence(10),
+                'image' => $faker->imageUrl(),
                 'price' => $faker->randomFloat(2, 10, 100),
+                'stock' => $faker->boolean(),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
