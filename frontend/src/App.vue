@@ -9,13 +9,13 @@
 </template>
 
 <script>
-import SidebarApp from './components/SidebarApp.vue';
-import BreadcrumbsApp from './components/BreadcrumbsApp.vue';
+  import SidebarApp from './components/SidebarApp.vue'
+  import BreadcrumbsApp from './components/BreadcrumbsApp.vue'
 
-export default {
-  components: {
-    SidebarApp,
-    BreadcrumbsApp,
+  export default {
+    components: {
+      SidebarApp,
+      BreadcrumbsApp
+    }
   }
-};
 </script>

@@ -11,6 +11,7 @@ declare module 'vue' {
     ButtonApp: typeof import('./components/ButtonApp.vue')['default']
     DataTable: typeof import('./components/DataTable.vue')['default']
     FooterApp: typeof import('./components/FooterApp.vue')['default']
+    GenerateForm: typeof import('./components/GenerateForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SidebarApp: typeof import('./components/SidebarApp.vue')['default']

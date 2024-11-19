@@ -32,7 +32,7 @@ export const productService = {
 
   async addProduct (product: Product): Promise<Product> {
     try {
-      const response = await axios.post(API_URL, product)
+      const response = await axios.post(`${API_URL}/products/add`, product)
       return response.data
     } catch (error) {
       console.error('Error adding product:', error)
